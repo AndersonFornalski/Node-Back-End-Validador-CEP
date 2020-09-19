@@ -19,9 +19,19 @@ router.get("/", function(req, res){
      }) 
 })
 
-
+//função onde cada usuario altera seus dados separadamente
 router.get("/manage", userLogin.authMiddleWare, function(req, res){
-    
+    const user = res.locals.user
+
+    produtoModel.where({user})
+        .populate("user")
+        .exec(function(error,foundProduto){
+            if(error){
+                return res.status(400).send({title:"Erro", detail:"erro ao tentar localizar usuario Manage"})
+            }
+
+            return res.send(foundProduto);
+        })
 })
 
 
@@ -51,7 +61,7 @@ router.delete("/v2/:id", userLogin.authMiddleWare, function(req, res){
                         return res.status(422).send({error:"erro ao executar a exclusão"})
                     }
                     if( user.id !== encontreProduto.user.id ){
-                        return res.status(400).send({error:"Usuario Invalido!  nao pode excluir, verificar Id"})
+                        return res.status(400).send({error:"Seu usuario não é o mesmo, você não pode excluir "})
                     }
                     encontreProduto.remove(function(erro){
                         if(erro){
@@ -73,6 +83,25 @@ router.post("/", function(req, res){
         }
            return res.send(userCreated);
     })
+})
+
+//funcao de pesquisa de produtos por laboratorio
+router.get("/pesquisa", function(req, res){
+    const laboratorio = req.query.laboratorio
+    const query = laboratorio ? {laboratorio: laboratorio} : {}; 
+    
+    produtoModel.find(query)
+                .exec(function(error, foundProduto){
+                    if(error){
+                       return res.status(400).send({title:"erro ao efetuar pesquisa"})
+                    }
+                    if(laboratorio && foundProduto.length === 0){
+                       return res.status(400).send({title:"nome não encontrado", detail:`nada encontrado com o nome de ---${laboratorio}--- `})
+                    }
+                        return res.send(foundProduto);
+                    
+    })  
+   
 })
 
 //post versão 2 com authorization
