@@ -23,11 +23,11 @@ const userSchema = new Schema({
         type: String,
         min:[4, "mínimo 4 characters"],
         max:[32, "máximo 32 characters"],
-        required:"A senha é necessaria",
+        required:"A senha é necessaria", 
         },
     
     
-        produtos:[{type: Schema.Types.ObjectId, ref:"Produto"}]
+        produtos: [{type: Schema.Types.ObjectId, ref:"Produto"}]
 })
 
 //senha encriptografada

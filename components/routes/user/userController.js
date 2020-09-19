@@ -14,7 +14,7 @@ router.post("/register", userLogin.register)
 
 
 router.get("/", function(req, res){
-     userModel.find(function(err, foundUsers){
+     userModel.find({}, function(err, foundUsers){
          if(err){
              return res.status(400).send({message:"verificar GET da rota userController"});
          }

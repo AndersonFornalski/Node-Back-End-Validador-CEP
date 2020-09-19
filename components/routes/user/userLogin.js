@@ -7,7 +7,7 @@ exports.auth = function (req, res) {
     const { email, senha } = req.body;
 
     if(!senha || !email){
-        return res.status(422).send({errors:[{title:"Data missing!", detail:"Provide email and password!"}]});
+        return res.status(422).send({errors:[{title:"", detail:"e-mail ou senha nao encontrado"}]});
      }
      userModel.findOne({email}, function(err, user){
          if(err){
