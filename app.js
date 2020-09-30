@@ -5,9 +5,14 @@ const cors = require("cors");
 const PORT = process.env.PORT || 3010;
 const dataBase = require("./dataBase/url");
 
-//Controller
+//Controllers
 const userControl = require("./components/routes/user/userController"),
-      produtoControl = require("./components/routes/produtos/produtoController")
+      produtoControl = require("./components/routes/produtos/produtoController"),
+      imageUpload = require("./components/routes/imagens/image1Controller"),
+      imageUpload2 = require("./components/routes/imagens/image2Controller"),
+      imageUpload3 = require("./components/routes/imagens/image3Controller"),
+      imageUpload4 = require("./components/routes/imagens/image4Controller"),
+      imageUpload5 = require("./components/routes/imagens/image5Controller")
 
 
 const app = express();
@@ -30,6 +35,11 @@ app.use(bodyParser.json())
 //Routes
 app.use("/user", userControl);
 app.use("/produto", produtoControl);
+app.use("/imagem", imageUpload );
+app.use("/imagem", imageUpload2 );
+app.use("/imagem", imageUpload3 );
+app.use("/imagem", imageUpload4 );
+app.use("/imagem", imageUpload5 );
 
 
 
