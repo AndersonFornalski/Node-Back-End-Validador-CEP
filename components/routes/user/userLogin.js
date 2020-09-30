@@ -23,7 +23,7 @@ exports.auth = function (req, res) {
             const token =  jwt.sign({
                 userId: user.id,
                 nomeUsuario: user.nomeUsuario                       
-                   }, config.SECRET, { expiresIn: "1h"});
+                   }, config.TOKEN_SECRET, { expiresIn: "1h"});
 
             return res.json(token);
          }
@@ -93,7 +93,7 @@ exports.authMiddleWare = function (req, res, next){
 }
 
 function parseToken(token){
-    return jwt.verify(token.split(' ')[1], config.SECRET);
+    return jwt.verify(token.split(' ')[1], config.TOKEN_SECRET);
     }
   
 function notAuthorization(){

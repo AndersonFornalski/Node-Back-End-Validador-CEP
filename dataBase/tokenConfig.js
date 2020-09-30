@@ -1,3 +1,3 @@
 module.exports={
-    SECRET:"enaRt45ifdi8045rtUiopL"
+    TOKEN_SECRET:"enaRt45ifdi8045rtUiopL"
 }
