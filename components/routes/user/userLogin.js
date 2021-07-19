@@ -9,15 +9,14 @@ exports.auth = function (req, res) {
     if(!senha || !email){
         return res.status(422).send({errors:[{title:"", detail:"e-mail ou senha nao encontrado"}]});
      }
-     userModel.findOne({email}, function(err, user){
+     userModel.findOne({ email }, function(err, user){
          if(err){
-            return res.status(422).send({"mongoose": "handle mongoose errors in next lecture"});
+            return res.status(422).send({"mongoose": "erro no mongoDb"});
          }
-
          if(!user){
              return res.status(422).send({errors:[{title:"Usuario Inválido!", detail:"Usuário não existe!"}]});
-
          }
+
         //token - login 
          if(user.hasSamePassword(senha)){
             const token =  jwt.sign({
@@ -28,7 +27,7 @@ exports.auth = function (req, res) {
             return res.json(token);
          }
          else{
-            return res.status(422).send({errors:[{title:"Data Errada!", detail:"email ou senha inválidos"}]});
+            return res.status(422).send({errors:[{title:"Dados errados!", detail:"email ou senha inválidos"}]});
          }
          
      });
@@ -39,9 +38,9 @@ exports.auth = function (req, res) {
 //REGISTRO DE USUARIO//
 exports.register = function (req, res) {
     const { nomeUsuario, email, senha, confirmacaoSenha } = req.body;
-
+    
     if(!senha || !email){
-       return res.status(422).send({errors:[{title:"Data missing!", detail:"Provide email and password!"}]});
+       return res.status(422).send({errors:[{title:"Dados faltando!", detail:"necessario e-mail e senha"}]});
     }
     if(senha !== confirmacaoSenha){
         return res.status(422).send({errors:[{title:"senha invalida!", detail:"senha não é a mesma, tente novamente!"}]});
@@ -96,9 +95,10 @@ function parseToken(token){
     return jwt.verify(token.split(' ')[1], config.TOKEN_SECRET);
     }
   
-function notAuthorization(){
-    return res.status(422).send({errors:[{title:"Not Authorized!", detail:"You need to login to get access!"}]})
-}    
+//function notAuthorization(){
+  //  return res.status(422).send({errors:[{title:"nao autorizado!", detail:"You need to login to get access!"}]})
+//}    
+
 }
 
 

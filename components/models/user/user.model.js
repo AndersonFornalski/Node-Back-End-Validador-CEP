@@ -26,8 +26,7 @@ const userSchema = new Schema({
         required:"A senha é necessaria", 
         },
     
-    
-        produtos: [{type: Schema.Types.ObjectId, ref:"Produto"}]
+        cidades: [{ type: Schema.Types.ObjectId, ref:"Cidade" }]
 })
 
 //senha encriptografada

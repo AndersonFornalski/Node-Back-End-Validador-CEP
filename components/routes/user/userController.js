@@ -4,15 +4,12 @@ const userLogin = require("../user/userLogin")
 const userModel = require("../../models/user/user.model")
 
 ///AUTENTICAÇÃO///
-
 router.post("/auth", userLogin.auth);
 
-
 router.post("/register", userLogin.register)
-
 /// FIM DA AUTENTICAÇÃO///
 
-
+//LISTA TODOS USUARIOS
 router.get("/", function(req, res){
      userModel.find({}, function(err, foundUsers){
          if(err){
@@ -35,7 +32,13 @@ router.get("/:id", function(req, res){
 
 //Este POST nao está sendo usado no momento, somente pelo controle de Login
 router.post("/", function(req, res){
-    const { nomeUsuario, email, senha, produtos} = req.body;
+    const { nomeUsuario, email, senha, produtos } = req.body;
+        const error = [];
+        if(!nomeUsuario) error.push("nomeUsuario");
+        if(!email) error.push("email");
+        if(!senha) error.push("senha");
+        if(error.length > 0) return res.status(422).json({ error: "required", payload: error});
+
     const userSave = new userModel({ nomeUsuario, email, senha, produtos });
 
     userSave.save(function(err, userCreated){

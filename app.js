@@ -7,18 +7,13 @@ const dataBase = require("./dataBase/url");
 
 //Controllers
 const userControl = require("./components/routes/user/userController"),
-      produtoControl = require("./components/routes/produtos/produtoController"),
-      imageUpload = require("./components/routes/imagens/image1Controller"),
-      imageUpload2 = require("./components/routes/imagens/image2Controller"),
-      imageUpload3 = require("./components/routes/imagens/image3Controller"),
-      imageUpload4 = require("./components/routes/imagens/image4Controller"),
-      imageUpload5 = require("./components/routes/imagens/image5Controller")
+      cidadeControl = require("./components/routes/cidade/cidadeController")
 
 
 const app = express();
 
 mongoose.connect(dataBase.Url_mongoDb, { useNewUrlParser: true, useUnifiedTopology: true  },
-    console.log("Conexion Mongoose Ok"))  
+    console.log("Mongoose Ok"))  
     
     
 app.use((req, res, next) =>{
@@ -34,18 +29,10 @@ app.use(bodyParser.json())
 
 //Routes
 app.use("/user", userControl);
-app.use("/produto", produtoControl);
-app.use("/imagem", imageUpload );
-app.use("/imagem", imageUpload2 );
-app.use("/imagem", imageUpload3 );
-app.use("/imagem", imageUpload4 );
-app.use("/imagem", imageUpload5 );
-
-
-
-
+app.use("/cidade", cidadeControl);
 
 
 app.listen(PORT, function(){
-    console.log("running in port 3010")
+    console.log("rodando na porta 3010")
 })
+
